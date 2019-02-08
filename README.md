@@ -16,6 +16,7 @@ For debug outputs:
 ```bash
 python3 ./redaction.py terms.txt input/ output/
 ```  
+**NOTE:** Your "output" directory should already be created, or the utility will return error!  
 
 You can also specify the number of threads that you want spooled by including `--n N` flag. This number should not exceed 1.5x your actual core count. On smaller datasets (<10K items), single thread may perform better.
 
