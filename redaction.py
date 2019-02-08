@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import os.path
 import argparse
+from os import listdir
+from os.path import join, isfile
 
 VERSION_STRING = "v0.1b"
 
@@ -35,7 +36,7 @@ def process_file(f_input, f_output):
     global terms
 
     output_token_list = []
-    with open(os.path.join(input_folder, f_input), "r", encoding="utf8") as f:
+    with open(join(input_folder, f_input), "r", encoding="utf8") as f:
         string_buffer = f.read().replace('\n', ' \n')       # Preserve newlines
         string_buffer = string_buffer.replace('\t', ' \t')  # Preserve tabs
         token_buffer = string_buffer.split(' ')             # Only split on whitespace
@@ -46,7 +47,7 @@ def process_file(f_input, f_output):
                 output_token_list.append(token)
 
         result_string = " ".join(output_token_list)
-        output_file = open(os.path.join(f_output, f_input), "w", encoding="utf8")
+        output_file = open(join(f_output, f_input), "w", encoding="utf8")
         output_file.write(result_string)
 
 
@@ -57,9 +58,16 @@ if __name__ == "__main__":
     parser.add_argument('output_folder', default="output/", help='Output text folder', type=str, nargs='?')
     args = parser.parse_args()
 
+    input_folder = args.input_folder
+    file_list = [f for f in listdir(input_folder) if isfile(join(input_folder, f))]
+
     print("Batch document redeactor " + VERSION_STRING)
     load_terms(args.terms_list)
     print("Terms list loaded, starting redaction...")
-    input_folder = args.input_folder
-    process_file("000000.txt", args.output_folder)
+
+    file_list.sort()
+
+    for item in file_list:
+        process_file(item, args.output_folder)
+        print("Processing: " + item)
     print("Redaction complete!")
