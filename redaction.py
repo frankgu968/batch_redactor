@@ -1,7 +1,12 @@
-import os.path
+#!/usr/bin/env python3
 
-terms = dict()  # Dictionary of terms
-input_folder = ""
+import os.path
+import argparse
+
+VERSION_STRING = "v0.1b"
+
+terms = dict()      # Dictionary of terms
+input_folder = ""   # Globally visible input folder
 
 
 def load_terms(f_input):
@@ -46,6 +51,15 @@ def process_file(f_input, f_output):
 
 
 if __name__ == "__main__":
-    load_terms("/Users/frank/Desktop/Ensho/terms.txt")
-    input_folder = "/Users/frank/Desktop/Ensho/corpus"
-    process_file("000000.txt", "/Users/frank/Desktop/Ensho/output")
+    parser = argparse.ArgumentParser(description="Batch document redactor " + VERSION_STRING)
+    parser.add_argument('terms_list', default="terms.txt", help='Terms list path', type=str, nargs='?')
+    parser.add_argument('input_folder', default="corpus/", help='Input text folder', type=str, nargs='?')
+    parser.add_argument('output_folder', default="output/", help='Output text folder', type=str, nargs='?')
+    args = parser.parse_args()
+
+    print("Batch document redeactor " + VERSION_STRING)
+    load_terms(args.terms_list)
+    print("Terms list loaded, starting redaction...")
+    input_folder = args.input_folder
+    process_file("000000.txt", args.output_folder)
+    print("Redaction complete!")
