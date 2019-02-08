@@ -14,7 +14,7 @@ def load_terms(f_input):
     """
     with open(f_input, "r", encoding="utf8") as f:
         for line in f:
-            sanitized_line = line.strip()
+            sanitized_line = line.strip().upper()
             terms[sanitized_line] = str(len(sanitized_line))
 
 
@@ -35,13 +35,13 @@ def process_file(f_input, f_output):
         string_buffer = string_buffer.replace('\t', ' \t')  # Preserve tabs
         token_buffer = string_buffer.split(' ')             # Only split on whitespace
         for token in token_buffer:
-            if token in terms.keys():
-                output_token_list.append("<removed " + terms[token] + ">")
+            if token.upper() in terms.keys():
+                output_token_list.append("<removed " + terms[token.upper()] + ">")
             else:
                 output_token_list.append(token)
 
         result_string = " ".join(output_token_list)
-        output_file = open(os.path.join(f_output, f_input), "w",encoding="utf8")
+        output_file = open(os.path.join(f_output, f_input), "w", encoding="utf8")
         output_file.write(result_string)
 
 
