@@ -4,3 +4,5 @@ output/
 terms.txt
 *.pdf
 .DS_Store
+*.pyc
+*.html

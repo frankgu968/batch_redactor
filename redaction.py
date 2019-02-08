@@ -28,7 +28,7 @@ def load_terms(f_input):
     Provides a slight performance boost to not recalculate length every time
 
     :param f_input: Terms file path
-    :return: true - success; false - failure
+    :return: void
     """
     with open(f_input, "r", encoding="utf8") as f:
         for line in f:
@@ -43,7 +43,7 @@ def process_file(f_input, input_folder, f_output):
     :param f_input:     Input file name
     :param input_folder: Input folder path
     :param f_output:    Output folder path
-    :return:            true - success; false - failure
+    :return: void
     """
     global terms
 
